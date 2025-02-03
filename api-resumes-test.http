@@ -1,0 +1,71 @@
+@token=
+
+
+### Get all resumes
+GET http://localhost:3000/api/resumes
+Cookie: {{token}}
+Content-Type: application/json
+
+### Create resume
+POST http://localhost:3000/api/resumes
+Cookie: {{token}}
+Content-Type: application/json
+
+{
+  "content": "# John Doe\n\nSoftware Engineer with 5 years of experience..."
+}
+
+### Update resume
+PUT http://localhost:3000/api/resumes
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "content": "# 2233 John Doe\n\nUpdated resume content..."
+}
+
+
+### Get all versions for a resume
+GET http://localhost:3000/api/resumes/versions
+Content-Type: application/json
+Cookie: {{token}}
+
+### Create resume version
+POST http://localhost:3000/api/resumes/versions
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "prompt": "hello"
+}
+
+### Get single resume version
+@versionId=8KES2xai0G7Zmpg6o_aZN
+GET http://localhost:3000/api/resumes/versions/{{versionId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+### PUT regenerate resume version
+# @versionId="Xk29Vc_osmGFW8tFzQvME
+POST http://localhost:3000/api/resumes/versions/{{versionId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "regenerate": true
+}
+
+### Update content manually
+PUT http://localhost:3000/api/resumes/versions/{{versionId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "title": "untitled 3",
+  "content": "content 3"
+}
+
+### Delete resume version
+DELETE http://localhost:3000/api/resumes/versions/{{versionId}}
+Content-Type: application/json
+Cookie: {{token}} 

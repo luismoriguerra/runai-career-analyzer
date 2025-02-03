@@ -1,0 +1,87 @@
+@token=
+
+### Get all applications
+GET http://localhost:3000/api/applications
+Cookie: {{token}}
+Content-Type: application/json
+
+### Create application
+POST http://localhost:3000/api/applications
+Cookie: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Software Engineer",
+  "description": "Full-stack developer position",
+  "company_name": "Tech Corp"
+}
+
+### Get single application
+
+
+@applicationId = J5b-xRgRrcvna8JvX0Q3f
+
+GET http://localhost:3000/api/applications/{{applicationId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+### Update application
+PUT http://localhost:3000/api/applications/{{applicationId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "name": "Senior Software Engineer",
+  "description": "Updated description",
+  "company_name": "Tech Corp Updated"
+}
+
+### Delete application
+DELETE http://localhost:3000/api/applications/{{applicationId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+### Get all analyses for an application
+GET http://localhost:3000/api/applications/{{applicationId}}/analysis
+Content-Type: application/json
+Cookie: {{token}}
+
+### Application actions 
+GET http://localhost:3000/api/applications/{{applicationId}}/actions?action_name=bullet_points&rebuild=true
+Content-Type: application/json
+Cookie: {{token}}
+
+
+
+### Create analysis
+### Create analysis
+### Create analysis
+POST http://localhost:3000/api/applications/{{applicationId}}/analysis
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "action_name": "to_bullet_points",
+  "action_result": "- Point 1\n- Point 2\n- Point 3",
+  "prompt_text": "Convert the following text to bullet points",
+  "ai_messages": "[\"Original text\", \"AI response\"]"
+}
+
+### Update analysis
+
+@analysisId = T5Ohoh68FejsZfu-U4Ajs
+PUT http://localhost:3000/api/applications/{{applicationId}}/analysis/{{analysisId}}
+Content-Type: application/json
+Cookie: {{token}}
+
+{
+  "action_name": "to_bullet_points_updated",
+  "action_result": "- Updated Point 1\n- Updated Point 2",
+  "prompt_text": "Updated prompt",
+  "ai_messages": "[\"Updated text\", \"Updated AI response\"]"
+}
+
+### Delete analysis
+DELETE http://localhost:3000/api/applications/{{applicationId}}/analysis/{{analysisId}}
+Content-Type: application/json 
+Cookie: {{token}}

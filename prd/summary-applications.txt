@@ -1,0 +1,73 @@
+ 
+
+1. Create a new cloudflare d1 database migration by running in terminal the following command
+```
+npx wrangler d1 migrations create job-assistant create_applications_table
+```
+
+2. Update new migration file created in the previous step with the following schema
+
+```
+Create table applications (
+    id TEXT PRIMARY KEY,
+    user_id text NOT NULL,
+    name text NOT NULL,
+    description text,
+    company_name text NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+create table application_analysis (
+    id TEXT PRIMARY KEY,
+    application_id text NOT NULL,
+    action_name text NOT NULL,
+    action_result text NOT NULL,
+    prompt_text text NOT NULL,
+    ai_messages text NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+```
+
+3. Create Applications services in server/domain/applications.ts  following server/domain/settings.ts example
+
+4. CREATE API for applications
+
+GET /api/applications
+POST /api/applications
+
+{
+    "name": "string",
+    "description": "string",
+    "company_name": "string",
+}
+
+PUT /api/applications/:id
+DELETE /api/applications/:id
+
+4. CREATE API for application analysis
+
+GET /api/applications/:id/analysis
+POST /api/applications/:id/analysis
+
+{
+    "action_name": "to_bullet_points",
+    "action_result": "Markdown styled bullet points",
+    "prompt_text": "Convert the following <text> to bullet points",
+    "ai_messages": "['<text>']"
+}
+
+PUT /api/applications/:id/analysis/:id
+
+{
+    "action_name": "to_bullet_points",
+    "action_result": "Markdown styled bullet points",
+    "prompt_text": "Convert the following <text> to bullet points",
+    "ai_messages": "['<text>']"
+}
+
+DELETE /api/applications/:id/analysis/:id
+
+5. Create api-application.http file and add request examples to test the api
