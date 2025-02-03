@@ -1,8 +1,10 @@
 import { getProvider } from '@/server/infrastructure/ai/llm-providers';
 import { OpenRouterLanguageModel } from '@openrouter/ai-sdk-provider';
 
-const websearch = getProvider('openrouter::perplexity/sonar-reasoning');
-const reasoning = getProvider('openrouter::minimax/minimax-01');
+// const websearch = getProvider('openrouter::perplexity/sonar-reasoning');
+// const longContext = getProvider('openrouter::minimax/minimax-01');
+const websearch = getProvider('openrouter::perplexity/llama-3.1-sonar-small-128k-online');
+const reasoning = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
 const defaultModel = getProvider('openrouter::nousresearch/hermes-2-pro-llama-3-8b');
 
 export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouterLanguageModel, dependencies?: string[] }> = {
