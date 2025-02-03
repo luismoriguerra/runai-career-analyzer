@@ -37,7 +37,7 @@ export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouter
     },
 
     "get_company_info": {
-        prompt: "Provide information about the company that is relevant to the job description. The information should be well structured in bullet points. and grouped by category and level of difficulty. provide links in the same response.",
+        prompt: "Search the web for information about the company that is relevant to the job description. Provide me interesting information I should know about the company for the interview.",
         model: websearch
     },
 
@@ -49,6 +49,7 @@ export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouter
     "get_demo_apps": {
         prompt: `Provide me 3 or 5 demo apps examples following common scenarios to show case the skills and technologies mentioned in the job description.
     Also provide a system design for demo applications that incorporates the main technologies and skills mentioned in the job posting. Consider the following:
+   - short description of the app
    - Architecture (e.g., microservices, monolithic, serverless)
    - Backend and frontend technologies
    - Databases and data storage solutions
