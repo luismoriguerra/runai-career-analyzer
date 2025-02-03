@@ -1,7 +1,7 @@
 export const ANALYSIS_SYSTEM_PROMPT = (jobDescription: string, rebuildId?: number,  resume?: string): string => {
     const basePrompt = `You are an AI assistant specialized in analyzing job descriptions. 
 Below, you will be provided context wrapped in tags. 
-You must respond to the prompt based on the job description. don't explain yourself. only return the response.\n\n`;
+You must respond to the prompt based on the job description. don't explain yourself. only return the response in well formatted markdown.\n\n`;
 
     const tags: string[] = [];
 

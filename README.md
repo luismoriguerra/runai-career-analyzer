@@ -1,6 +1,32 @@
-# Applications Assistant
+# Runai Technologies - Career Assistant
 
-A modern web application built with Next.js that helps manage job applications and resumes with AI assistance. The application provides a seamless experience for tracking job applications, managing resumes, and leveraging AI for better job search outcomes.
+A sophisticated AI-powered career management platform built as a hobby project. This application streamlines the job application process by providing intelligent tools for managing applications, optimizing resumes, and leveraging AI for better career outcomes.
+
+## 🎯 Project Overview
+
+The Career Assistant app is designed to help job seekers organize their job search process while utilizing advanced AI capabilities. It serves as a comprehensive tool for tracking applications, managing multiple resumes, and getting AI-powered insights for job search optimization.
+
+### Key Skills Demonstrated:
+
+- **Full-Stack Development**: Next.js 14, React 18, TypeScript
+- **Modern Frontend Architecture**: 
+  - Component-driven development with shadcn/ui
+  - Responsive design with Tailwind CSS
+  - Server-side and client-side rendering optimization
+- **Backend & Infrastructure**: 
+  - Edge computing with Cloudflare Pages
+  - SQLite database management using D1
+  - RESTful API design
+- **AI Integration**: 
+  - Multiple AI provider integration (OpenAI, Anthropic, Groq, Mistral)
+  - Prompt engineering and AI response handling
+- **Security & Authentication**: 
+  - Auth0 implementation
+  - Secure API design
+- **DevOps & Deployment**: 
+  - Cloudflare Pages deployment
+  - Database migrations and management
+  - Environment configuration
 
 ## 🚀 Features
 
