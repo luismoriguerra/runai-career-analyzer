@@ -1,0 +1,24 @@
+
+@token = {{$processEnv USER_TOKEN}}
+@applicationId=PROlqK-Y_ryNbOvhgfIL4
+
+### Get all comments for an application
+GET http://localhost:3000/api/applications/{{applicationId}}/comments
+Cookie: {{token}}
+
+### @name createComment
+POST http://localhost:3000/api/applications/{{applicationId}}/comments
+Cookie: {{token}}
+Content-Type: application/json
+
+{
+    "comment": "This is a test comment for the application"
+}
+
+
+#### 
+@commentId = {{createComment.response.body.$.id}}
+
+### Delete a comment
+DELETE http://localhost:3000/api/applications/{{applicationId}}/comments/{{commentId}}
+Cookie: {{token}} 

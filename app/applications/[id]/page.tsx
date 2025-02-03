@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Application } from '@/server/domain/applications';
 import { ApplicationHeader } from '@/components/applications/application-header';
 import { ApplicationEditForm } from '@/components/applications/application-edit-form';
-import { ApplicationActions } from '@/components/applications/application-actions';
+import { ApplicationTabs } from '@/components/applications/application-tabs';
 import { Building2 } from 'lucide-react';
 
 export const runtime = 'edge';
@@ -143,7 +143,7 @@ export default function ApplicationDetail() {
           </div>
         </div>
 
-        <ApplicationActions />
+        <ApplicationTabs />
       </div>
     </main>
   );

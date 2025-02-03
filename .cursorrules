@@ -21,6 +21,33 @@ The next items are must in the codebase:
 - app/api/settings/[id]/route.ts
 1. when you need to create test file for new APIS follow examples in 
 -- api-db-test.http
+follow this code example for api tests
+```
+
+@token = {{$processEnv USER_TOKEN}}
+@applicationId=PROlqK-Y_ryNbOvhgfIL4
+
+### Get all comments for an application
+GET http://localhost:3000/api/applications/{{applicationId}}/comments
+Cookie: {{token}}
+
+### @name createComment
+POST http://localhost:3000/api/applications/{{applicationId}}/comments
+Cookie: {{token}}
+Content-Type: application/json
+
+{
+    "comment": "This is a test comment for the application"
+}
+
+
+#### 
+@commentId = {{createComment.response.body.$.id}}
+
+### Delete a comment
+DELETE http://localhost:3000/api/applications/{{applicationId}}/comments/{{commentId}}
+Cookie: {{token}} 
+```
 
 1. if you need to create CRUD for a new table follow this plan and follow previous examples
 - create a service for the new table 
