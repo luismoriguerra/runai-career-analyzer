@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Applications Assistant
 
-## Getting Started
+A modern web application built with Next.js that helps manage job applications and resumes with AI assistance. The application provides a seamless experience for tracking job applications, managing resumes, and leveraging AI for better job search outcomes.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Authentication**: Secure authentication using Auth0
+- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
+- **AI Integration**: Multiple AI provider support through a unified gateway
+- **Database**: Cloudflare D1 (SQLite) for data persistence
+- **Edge Runtime**: Optimized for performance with Next.js edge runtime
+- **Application Management**: CRUD operations for job applications
+- **Resume Management**: Store and manage multiple resumes
+- **Settings Configuration**: Customizable application settings
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14, React 18
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **Authentication**: Auth0
+- **Database**: Cloudflare D1 (SQLite)
+- **Deployment**: Cloudflare Pages
+- **AI Providers**: Support for multiple AI providers (OpenAI, Anthropic, Groq, Mistral)
+- **Type Safety**: TypeScript
+
+## 🏗️ Project Structure
+
+```
+├── app/                  # Next.js app directory
+├── components/          # React components
+├── server/             # Server-side code
+│   ├── domain/         # Business logic
+│   └── infrastructure/ # External services integration
+├── migrations/         # D1 database migrations
+├── hooks/              # Custom React hooks
+└── public/             # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚦 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository**
+```bash
+git clone [repository-url]
+cd applications-assistant
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies**
+```bash
+npm install
+```
 
-## Learn More
+3. **Set up environment variables**
+Create a `.env.local` file with the necessary environment variables:
+```
+# Auth0 Configuration
+AUTH0_SECRET='your-auth0-secret'
+AUTH0_BASE_URL='your-auth0-base-url'
+AUTH0_ISSUER_BASE_URL='your-auth0-issuer-url'
+AUTH0_CLIENT_ID='your-auth0-client-id'
+AUTH0_CLIENT_SECRET='your-auth0-client-secret'
 
-To learn more about Next.js, take a look at the following resources:
+# Database Configuration
+DATABASE_URL='your-database-url'
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# AI Provider Keys
+OPENAI_API_KEY='your-openai-key'
+# Add other AI provider keys as needed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Initialize the database**
+```bash
+wrangler d1 migrations apply --local
+```
 
-## Deploy on Vercel
+5. **Run the development server**
+```bash
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Available Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev`: Start development server
+- `npm run build`: Build the application
+- `npm run start`: Start production server
+- `npm run lint`: Run ESLint
+- `npm run pages:build`: Build for Cloudflare Pages
+- `npm run preview`: Preview Cloudflare Pages build locally
+- `npm run deploy`: Deploy to Cloudflare Pages
+
+## 🔄 Database Migrations
+
+To create a new migration:
+```bash
+wrangler d1 migrations create [migration-name]
+```
+
+To apply migrations locally:
+```bash
+wrangler d1 migrations apply --local
+```
+
+## 🚀 Deployment
+
+The application is configured for deployment on Cloudflare Pages. The deployment process is handled through the following steps:
+
+1. Build the application: `npm run pages:build`
+2. Deploy to Cloudflare Pages: `npm run deploy`
+
+## 📄 License
+
+[Add your license information here]
