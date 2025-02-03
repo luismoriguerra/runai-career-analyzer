@@ -4,8 +4,9 @@ import { OpenRouterLanguageModel } from '@openrouter/ai-sdk-provider';
 // const websearch = getProvider('openrouter::perplexity/sonar-reasoning');
 // const longContext = getProvider('openrouter::minimax/minimax-01');
 // const websearch = getProvider('openrouter::perplexity/llama-3.1-sonar-small-128k-online');
+// const reasoning = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
 const websearch = getProvider('openrouter::perplexity/llama-3.1-sonar-large-128k-online');
-const reasoning = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
+const reasoning = getProvider('openrouter::minimax/minimax-01');
 const defaultModel = getProvider('openrouter::nousresearch/hermes-2-pro-llama-3-8b');
 
 export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouterLanguageModel, dependencies?: string[] }> = {
@@ -59,7 +60,7 @@ export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouter
    - Databases and data storage solutions
    - APIs and integrations
    - Deployment and scalability considerations`,
-        model: reasoning
+        model: defaultModel
     },
 
     "get_cover_letter": {
@@ -70,7 +71,7 @@ export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouter
 
     "get_resume_hightlights": {
         prompt: "Provide me a list of hightlights from my resume. Hightlights are the most relevant information from my resume that are relevant to the job description. include a brief description, skills and what I'm good fit for. this content should be friendly and professional and descriptive.",
-        model: defaultModel,
+        model: reasoning,
         dependencies: ['resume']
     },
 
