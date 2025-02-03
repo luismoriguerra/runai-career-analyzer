@@ -65,5 +65,17 @@ Organize the information in clear sections and highlight specific points that co
         model: reasoning
     },
 
+    "get_cover_letter": {
+        prompt: "Provide me a cover letter for the job description using my recent resume information. Provide me 3 cover letters. One long and descriptive and another short and concise and one of few lines to send as a whatsapp message.",
+        model: defaultModel,
+        dependencies: ['resume']
+    },
+
+    "get_resume_hightlights": {
+        prompt: "Provide me a list of hightlights from my resume. Hightlights are the most relevant information from my resume that are relevant to the job description. include a brief description, skills and what I'm good fit for. this content should be friendly and professional and descriptive.",
+        model: defaultModel,
+        dependencies: ['resume']
+    },
+
 
 }; 

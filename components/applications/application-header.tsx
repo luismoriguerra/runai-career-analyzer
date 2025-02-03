@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Pencil, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import { SetBreadcrumb } from '@/components/set-breadcrumb';
 import { Application } from '@/server/domain/applications';
 import {
@@ -11,8 +11,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ApplicationHeaderProps {
   application: Application;
@@ -36,7 +41,7 @@ export function ApplicationHeader({
   setShowDeleteDialog,
 }: ApplicationHeaderProps) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between relative">
       <SetBreadcrumb
         breadcrumbs={[
           { label: 'Home', route: '/' },
@@ -52,23 +57,29 @@ export function ApplicationHeader({
             </Button>
           </>
         ) : (
-          <>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={onEdit}
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-            <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="destructive"
-                  size="icon"
-                >
-                  <Trash2 className="h-4 w-4" />
+          <div className="absolute top-4 right-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <MoreHorizontal className="h-4 w-4" />
                 </Button>
-              </DialogTrigger>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={onEdit}>
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-destructive"
+                  onClick={() => setShowDeleteDialog(true)}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Delete Application</DialogTitle>
@@ -86,7 +97,7 @@ export function ApplicationHeader({
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-          </>
+          </div>
         )}
       </div>
     </div>

@@ -4,11 +4,10 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Application } from '@/server/domain/applications';
-import { Card, CardHeader } from "@/components/ui/card";
 import { ApplicationHeader } from '@/components/applications/application-header';
 import { ApplicationEditForm } from '@/components/applications/application-edit-form';
-import { ApplicationView } from '@/components/applications/application-view';
 import { ApplicationActions } from '@/components/applications/application-actions';
+import { Building2 } from 'lucide-react';
 
 export const runtime = 'edge';
 
@@ -125,18 +124,24 @@ export default function ApplicationDetail() {
       />
 
       <div className="grid gap-6">
-        <Card>
-          <CardHeader className="pb-4">
+        <div className="bg-background border rounded-lg shadow-sm p-6">
+          <div className="space-y-4">
             {isEditing ? (
               <ApplicationEditForm
                 application={editedApplication}
                 onChange={setEditedApplication}
               />
             ) : (
-              <ApplicationView application={application} />
+              <>
+                <h2 className="text-2xl font-semibold">{application.name}</h2>
+                <div className="flex items-center gap-2 text-base text-muted-foreground">
+                  <Building2 className="h-4 w-4" />
+                  {application.company_name}
+                </div>
+              </>
             )}
-          </CardHeader>
-        </Card>
+          </div>
+        </div>
 
         <ApplicationActions />
       </div>
