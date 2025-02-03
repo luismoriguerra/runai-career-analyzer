@@ -53,7 +53,7 @@ export function CommentItem({ comment, onDelete }: CommentItemProps) {
             <p className="text-sm text-muted-foreground">
               {new Date(comment.created_at).toLocaleString()}
             </p>
-            <p className="mt-1">{comment.comment}</p>
+            <p className="mt-1 whitespace-pre-wrap">{comment.comment}</p>
           </div>
           <AlertDialog>
             <AlertDialogTrigger asChild>
