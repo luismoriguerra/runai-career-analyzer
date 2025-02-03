@@ -3,7 +3,8 @@ import { OpenRouterLanguageModel } from '@openrouter/ai-sdk-provider';
 
 // const websearch = getProvider('openrouter::perplexity/sonar-reasoning');
 // const longContext = getProvider('openrouter::minimax/minimax-01');
-const websearch = getProvider('openrouter::perplexity/llama-3.1-sonar-small-128k-online');
+// const websearch = getProvider('openrouter::perplexity/llama-3.1-sonar-small-128k-online');
+const websearch = getProvider('openrouter::perplexity/llama-3.1-sonar-large-128k-online');
 const reasoning = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
 const defaultModel = getProvider('openrouter::nousresearch/hermes-2-pro-llama-3-8b');
 
@@ -40,13 +41,7 @@ export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouter
 
 
     "get_company_info": {
-        prompt: `Search the web for comprehensive company information focusing on:
-1. Recent company news, achievements, and major projects (last 6-12 months)
-2. Company culture, values, and work environment
-3. Growth trajectory and future plans
-4. Main competitors and market position
-5. Notable challenges or changes the company is facing
-Organize the information in clear sections and highlight specific points that could be valuable discussion topics in the interview.`,
+        prompt: `Search the web for company information and provide me a summary of the company. and provide me a list of the main competitors and their main products. Also provide Company size, revenue and location. finally provide few questions that I can use in my interview.`,
         model: websearch
     },
 

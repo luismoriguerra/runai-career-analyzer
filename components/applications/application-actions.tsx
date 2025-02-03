@@ -40,17 +40,17 @@ const actionsList = [
     ),
   },
   {
+    id: 'company',
+    title: 'Company Information',
+    content: () => (
+      <JobAction action="get_company_info" />
+    ),
+  },
+  {
     id: 'common_interview_questions',
     title: 'Common Questionsfrom your Resume',
     content: () => (
       <JobAction action="common_interview_questions" />
-    ),
-  },
-  {
-    id: 'interview-questions',
-    title: 'Technical Questions',
-    content: () => (
-      <JobAction action="get_interview_questions" />
     ),
   },
   {
@@ -68,19 +68,20 @@ const actionsList = [
     ),
   },
   {
+    id: 'interview-questions',
+    title: 'Technical Questions',
+    content: () => (
+      <JobAction action="get_interview_questions" />
+    ),
+  },
+  {
     id: 'learning',
     title: 'Learning Resources',
     content: () => (
       <JobAction action="get_learning_resources" />
     ),
   },
-  {
-    id: 'company',
-    title: 'Company Information',
-    content: () => (
-      <JobAction action="get_company_info" />
-    ),
-  },
+
 
   {
     id: 'demo-apps',
