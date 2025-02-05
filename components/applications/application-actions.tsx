@@ -91,8 +91,8 @@ const actionsList = [
 ];
 
 export function ApplicationActions() {
-  const tabActions = actionsList.slice(0, 4);
-  const accordionActions = actionsList.slice(4);
+  const tabActions = actionsList.slice(0, 3);
+  const accordionActions = actionsList.slice(3);
 
   return (
     <div className="space-y-8">

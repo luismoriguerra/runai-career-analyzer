@@ -8,7 +8,6 @@ import Link from "next/link";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { getDb } from "@/server/infrastructure/d1";
 import { getSession } from "@auth0/nextjs-auth0/edge";
-import { ClientComponent } from "./client-component";
 
 
 
