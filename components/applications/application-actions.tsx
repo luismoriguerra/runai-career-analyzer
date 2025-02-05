@@ -4,9 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { JobAction } from '@/components/job-action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { CollapsibleDiv } from "@/components/ui/collapsible-div";
 
 const actionsList = [
   // {
@@ -95,14 +93,6 @@ const actionsList = [
 export function ApplicationActions() {
   const tabActions = actionsList.slice(0, 4);
   const accordionActions = actionsList.slice(4);
-  const [collapsedTabs, setCollapsedTabs] = useState<Record<string, boolean>>({});
-
-  const toggleCollapse = (tabId: string) => {
-    setCollapsedTabs(prev => ({
-      ...prev,
-      [tabId]: !prev[tabId]
-    }));
-  };
 
   return (
     <div className="space-y-8">
@@ -117,30 +107,10 @@ export function ApplicationActions() {
         {tabActions.map((action) => (
           <TabsContent key={action.id} value={action.id} className="mt-4">
             <Card>
-              <CardContent className="pt-6 relative">
-                <div className={cn(
-                  "transition-all duration-300 ease-in-out",
-                  collapsedTabs[action.id] ? "max-h-[120px]" : "max-h-none",
-                  "overflow-hidden"
-                )}>
-                  <div className={cn(
-                    "relative",
-                    collapsedTabs[action.id] && "mask-bottom"
-                  )}>
-                    {action.content()}
-                  </div>
-                </div>
-                <button
-                  onClick={() => toggleCollapse(action.id)}
-                  className="absolute right-0 top-0 bottom-0 w-6 bg-gray-200 hover:bg-gray-300 transition-colors flex items-center justify-center"
-                  aria-label="Toggle content height"
-                >
-                  {collapsedTabs[action.id] ? (
-                    <ChevronDown className="h-4 w-4" />
-                  ) : (
-                    <ChevronUp className="h-4 w-4" />
-                  )}
-                </button>
+              <CardContent className="pt-6">
+                <CollapsibleDiv>
+                  {action.content()}
+                </CollapsibleDiv>
               </CardContent>
             </Card>
           </TabsContent>

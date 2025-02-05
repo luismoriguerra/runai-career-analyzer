@@ -100,7 +100,7 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
       return <InlineMath math={mathExpression} />;
     }
 
-    const miniCodeInline = 32;
+    const miniCodeInline = 48;
     if (inline) {
       const content = String(children);
       // Skip code tag for small strings

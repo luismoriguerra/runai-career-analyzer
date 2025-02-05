@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/server/infrastructure/d1';
 import { ResumesService } from '@/server/domain/resumes';
 import { getSession } from '@auth0/nextjs-auth0/edge';
-import { getModelBasedOnPrompt } from '@/server/infrastructure/ai/llm-providers';
+import { modelByCategory } from '@/server/infrastructure/ai/llm-providers';
 import { generateText } from 'ai';
 
 export const runtime = 'edge';
@@ -63,17 +63,15 @@ export async function POST(
 
     const systemTemplate = `
         LLM Rules: You are an AI assistant that can help to improve a resume.
-        You are given a resume and a prompt.
-        You must respond to the prompt based on the resume. don't explain yourself. only return the response.
-        \n\n
-        RESUME: ${resume.content}
-        \n\n
-        REBUILD ID: ${rebuildId}
+You are given a resume and a prompt.
+You must respond to the prompt based on the resume. don't explain yourself. only return the response.
+<resume>${resume.content}</resume>
+<rebuildId>${rebuildId}</rebuildId>
     `;
 
 
     const { text, usage } = await generateText({
-      model: getModelBasedOnPrompt(systemTemplate + prompt),
+      model: modelByCategory.fastHermes2Pro8b,
       system: systemTemplate,
       maxTokens: 8000,
       prompt,

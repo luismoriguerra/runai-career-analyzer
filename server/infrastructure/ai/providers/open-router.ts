@@ -30,7 +30,12 @@ const openrouter = createOpenRouter({
         provider: {
             ignore: [
                 "Together",
-                "Novita"
+                "Novita",
+                "Cloudflare",
+                "Fireworks",
+                "Featherless",
+                "Kluster",
+                "Avian"
             ]
         },
     }

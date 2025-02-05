@@ -1,5 +1,5 @@
 import { generateText } from 'ai';
-import { getModelBasedOnPrompt } from '@/server/infrastructure/ai/llm-providers';
+import { modelByCategory } from '@/server/infrastructure/ai/llm-providers';
 import { ACTION_PROMPTS } from '../constants/action-prompts';
 import { ActionAnalysis, ActionName } from '../types/application-actions';
 import { ApplicationsService } from '../applications';
@@ -50,7 +50,7 @@ export class ApplicationAnalysisService {
 
 
         const { text, usage } = await generateText({
-            model: model || getModelBasedOnPrompt(prompt),
+            model: model || modelByCategory.fastHermes2Pro8b,
             system: this.generateSystemPrompt(description, rebuildId, resume?.content),
             maxTokens: 4000,
             prompt,
