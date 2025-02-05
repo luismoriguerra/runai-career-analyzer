@@ -1,7 +1,8 @@
-@token=
+
+@token = {{$processEnv USER_TOKEN}}
+
 ###
-###
-GET http://localhost:3000/api/me 
+GET http://localhost:3000/api/me
 Cookie: {{token}}
 Content-Type: application/json
 
@@ -35,3 +36,21 @@ Content-Type: application/json
 ###
 DELETE http://localhost:3000/api/settings/{{keyId}}
 Cookie: {{token}} 
+
+###
+###
+###
+
+curl 'http://localhost:3000/api/applications' \
+  -H 'Accept: */*' \
+  -H 'Accept-Language: es-US,es;q=0.9,en-US;q=0.8,en;q=0.7,es-419;q=0.6' \
+  -H 'Connection: keep-alive' \
+  -H 'Cookie: sidebar:state=false; appSession=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwidWF0IjoxNzM4NzYzOTU0LCJpYXQiOjE3Mzg3NjM5MjIsImV4cCI6MTczODg1MDM1NH0..ZZFipGJ7Nur_txeA.LSznIh98I-T802fEx6u21pr5J3B5icQniBzcXUrO7y-No5pkjqp6WfkFXyYwdAX8lwB1inaHQFDlbO4r_15kDaj3DQgIPbetjPi7WDqmdt8alu_8GFA8AaLSRgz4necm4dARSRA4GfgSPyyTmGIhKBvxRJPAePhXBnyThH-8eXFSivsgWGeCsOvGciEEwD-yN6KkPaq8svy2U2t6z2w9r941Yt3bZpvtEa8n5W0b0vdIRTqi1Qzc_gZ00fVuwaMLbJnaiIDjL2MOaTViygwOXr8IKV9S4Ln6z7IHjhDx6DmOy8CZKyTQirHuYREmS-1alD4gni2kKB6_sj0xBvQDo0V3Vb0Sh1p0OmzUUPrF8s5oTbepkbqufXliyjXW3n-U_RnkQ9m4puGTorzxsevuglEfYlGAtJFKm2IkuzVPKS9yAlpSv6Ej6ZnaAXYWZI1d60_4NlYSTp_7QY0d4ar1lUBZb4t4vMmodxXqv1Si2qxFR0PoBRQO-IiAK1Dh95yB2QgctwqWuWYFJvMSmMtkVWw9EiMLau5x89kVpPCiaZH4vb0UZH0DBKxmP3sPOUxXFd4SYX2oGfkW4gkQC_hPKPfV3B0kOKd06bQGvbkeD1enaAFNtnzMRqGu_ptC17_FX8bIyjVm5YiOtejNOH977atBi158Jrck1cJ7HaIqLZZ3tlPRY28It-vpBjtJL6WtEDJpqOwHxrtQu2bMUEP99POJpfQbRK0-4s7IG-rG4LIbB4cBKklwE95Aw_8xdhNGZT2zDwV5aPA-0CG-kjg7c61s4aOjWk4I5kV4WTTn-T2oa1TEeQKyTPs-cCGysFzC1ugx3ZdPnGYaYd_7s__OqRtuqN6MvzfPm2SD3_a2dOK7nNltm6RggYQugW0L34Rfcvvcu57tw0mmWfZLuq9fDGS4WZldSMsl57rv2Muz1yG5IceKurrUt1hn4isAsOnfU51T7YbYkJgzPUbZ4-5kJgzXtAfDOMGu4PEH0MkKq-oDYqq05LygrhlHKi4UlnOHqjHb-JVT-DtkV5QVH_rFE1Osby84CqV3TsCFCEbePkG_MbLq3DuKjlSCVU0WiP-TO9DK2czANrjRe-MklmDFslq22xGvv0grWfhMQn83oItNN0a2AcLMapXuCbaJonQOx7pgDFIBWL09mZfR-tq6NXeLTrrq2OjM2swvVSGmon3GJgU-WxFsbAZJunv2I6Zf78LJ6gvtiLxHOV29TVJoPaGN87oPvbfKZ7Z9uHta1hu-5gdRN7_bAkdLzoojFpFh0cEDn3tBIJh2d-XFKPOdFZPxesTK31Gz-BkpqJ4KzVnDxMgt5tH_AQiKcPvhgV1pXqufNEGnhJJJBKK_UI5_NkiXC7OrlPKTycifdcXQtN7ckTIxi0Da8PhaqWb1uX9Gq7ckHm5ObsmWexw-jyy5tJq9AnphEz8qhwFGkKUmJgW8xNcsU1TXhl2gP4Kf7T-q9up25XtTAupcy7mB293SzfPmkrijZDyCmGasymS3s7kuSA3Z1rF9pjwCYmZQuRwiNl2aT98hn_RYPH81i_K1m-LZ4xoK-iHCE2zfC5TQmubxhtxJJRbnVwxoBKMwlaSByHpTfPaH86zKfGRMjaho7iXKTx62aj8g4zn7lNGT3IDbEqqCsGxb1tEMv6mAXv4YIOMiMw_oBSAfzfuJKbB0J42xiHHfYmKlkU4SDogIChSJjkQi_jf2FyVKGRpM5ZzZ0ClCxb1dxV3HpVAkbaxvAze-mh_GkPzDoHfKwPadyH2tPklv72qFap7ZKDT81NR3mpYxwSiJDZaxSTJJXZG4lfqxFjQp5BqwUA10b1I3AQhql5c0uHYOHUXFNGHqVjXEv2LCAdXfSgW_9WF0IAJ5cbyI2pX4zQ_0gazTZINW86AWzeaMoBO93U6L0i2nRm8JiscC0p6LKvw3wBIWKlbyx-B10HKkyWgbfqhePHWGi51bkKqOlLtuaQDqYBTW3B0OxpTb5cr5V0Xn-q5j-39OaKZQJVN6qINftJVWM8y6mj748N0BMEu8LoZf-h5XzOt8oNhPsKCN9l3jwkgHCLbcapKrwA1I_9kWuELfmh5cz5j_jPCUr9HeGN1f8rV0h5e2H7pqIyuAQqcOJYYsBFu1s6TLbOwUDnpCJ2jUQ-SZxe0ygZFrWN1pb_PO3rYQI8noNSHuDn64IwRMNN5_hb2cTf7ier-6r3AxExiRvN1Npm7acqtkjQa_Fj-Cl_vclvXYkcyzpz324qJSGsvmpy2tGIhXxzKBpS4to6UNtCcSDxjG0Uw7Xdgs7nZ-H5WmamBGZnlLGhgJqOhwqqT8dzrjWUn3Ak4K4eEJvPGOHl00R9k5y-V6biFGMaJgmMHHItnLgPt5i6D3yFUjo49D2ZRPXVsg57vudaQcPg_nQ4HVD_jYd9LdL0CwbQ1hgMHa77ZxRrxGZNsP80DtMQNW66ycbqS4LKnZ2sy71yPG_7bGQJPfrwe7Dp5j5D2S9x9pRypv1gCehDLv_i76QNxdyrvPl9JEpKD4GI4t-G4VOH8HvGZFeHl5MYz2GD3bXnGUi-s1hMWDpFik-qMfHYat3zuxFB9iA9v3z19gXlUBmeD8eB1ejGy0IM6Pfkr6qfDLYcD9n8MrrLypk8jrIp-Vf8WcDNWxfVOYMoCbIVDzrP8J0ofElB9CVBTIk-GBUi2tcBvD-N139SNdxQfjoLB77MbYG5n9Gjx6JWMIHe4ynL8BrL4x8BcFcrLT3SH15bXRcdKxRGOxSRwBeJOQxIZB02CKmJQuyULTMP93Eg3MhpgDPNh8Zren6OZbgVdJrSW-B91uRLSgm14lZt-GeatQ9nVSaGJH6nrArb7F5cEF4DvmlhyA38B1MlFyAanL6CTmz5wdxfHz7IXo8EeInqiTr4Jycjp9f3km_e7Ay44Sg9mxtbm86dwmV4Z5NIgydNTowKSqtpIYqKZuIxK5ZRBzWCfA1jyqc_MJcUSQ090jS_gYlMJ3xujaSw4B2Xa_szdpcphHKXHvsA4CRlCMxudnjIXDiLzUGGKfnAaa2VD28ZsuhYl6CRhk6HqWeeRDgD1WQTbAiHD6wsKjr3e6j4P6ycO1._FzjmHTgMqNLaf1S5wtPmA' \
+  -H 'Referer: http://localhost:3000/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'

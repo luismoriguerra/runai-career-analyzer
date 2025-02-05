@@ -1,4 +1,3 @@
-
 @token = {{$processEnv USER_TOKEN}}
 @applicationId=PROlqK-Y_ryNbOvhgfIL4
 
@@ -21,4 +20,19 @@ Content-Type: application/json
 
 ### Delete a comment
 DELETE http://localhost:3000/api/applications/{{applicationId}}/comments/{{commentId}}
-Cookie: {{token}} 
+Cookie: {{token}}
+
+### Get user comments (default pagination - page 1, limit 10)
+GET http://localhost:3000/api/comments
+Cookie: {{token}}
+
+### Get user comments with custom pagination (page 2, limit 20)
+GET http://localhost:3000/api/comments?page=2&limit=20
+Cookie: {{token}}
+
+### Get user comments with invalid pagination (should return 400)
+GET http://localhost:3000/api/comments?page=0&limit=200
+Cookie: {{token}}
+
+### Get user comments without authentication (should return 401)
+GET http://localhost:3000/api/comments 

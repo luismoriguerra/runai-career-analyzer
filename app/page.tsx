@@ -1,6 +1,8 @@
 import { SetBreadcrumb } from "@/components/set-breadcrumb";
 import { ApplicationsGrid } from "@/components/applications-grid";
 import { ResumeCard } from "@/components/resume-card";
+import { LastComments } from "@/components/last-comments";
+
 export const runtime = 'edge';
 export default function Home() {
   return (
@@ -16,6 +18,11 @@ export default function Home() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ResumeCard />
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Last Comments</h2>
+          <LastComments />
         </div>
 
         <ApplicationsGrid />

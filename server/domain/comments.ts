@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 export interface Comment {
     id: string;
     application_id: string;
+    application_name?: string;
     comment: string;
     user_id: string;
     created_at: string;
@@ -41,6 +42,37 @@ export class CommentsService {
         return result.results as unknown as Comment[];
     }
 
+    async getLastUserComments(
+        userId: string,
+        page: number = 1,
+        limit: number = 10
+    ): Promise<{ data: Comment[]; total: number }> {
+        const offset = (page - 1) * limit;
+
+        const [commentsResult, totalResult] = await Promise.all([
+            this.db.prepare(
+                `SELECT 
+                    c.*,
+                    a.name as application_name
+                FROM application_comments c
+                INNER JOIN applications a ON c.application_id = a.id
+                WHERE c.user_id = ? 
+                ORDER BY c.created_at DESC 
+                LIMIT ? OFFSET ?`
+            ).bind(userId, limit, offset)
+                .all(),
+            this.db.prepare(
+                'SELECT COUNT(*) as count FROM application_comments WHERE user_id = ?'
+            ).bind(userId)
+                .first()
+        ]);
+
+        return {
+            data: commentsResult.results as unknown as Comment[],
+            total: (totalResult as { count: number }).count
+        };
+    }
+    
     async getComment(id: string, applicationId: string): Promise<Comment | null> {
         const result = await this.db.prepare(
             'SELECT * FROM application_comments WHERE id = ? AND application_id = ?'
