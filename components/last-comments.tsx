@@ -1,67 +1,33 @@
-'use client';
 
-import { useEffect, useState } from "react";
-import { Comment } from "@/server/domain/comments";
-import { useToast } from "@/hooks/use-toast";
+
+import { CommentsService } from "@/server/domain/comments";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { MarkdownRenderer } from "./MarkdownRenderer";
+import { getDb } from "@/server/infrastructure/d1";
+import { getSession } from "@auth0/nextjs-auth0/edge";
+import { ClientComponent } from "./client-component";
 
-interface CommentsResponse {
-  data: Comment[];
-  total: number;
+
+
+export const runtime = 'edge';
+
+async function getComments() {
+  const db = getDb();
+  const commentsService = new CommentsService(db);
+  const session = await getSession();
+  if (!session) {
+    return { data: [], total: 0 };
+  }
+  const comments = await commentsService.getLastUserComments(session.user.sub, 1, 10);
+  return comments;
 }
 
-export function LastComments() {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [expandedComments, setExpandedComments] = useState<Set<string>>(new Set());
-  const { toast } = useToast();
+export async function LastComments() {
 
-  const toggleComment = (commentId: string) => {
-    setExpandedComments(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(commentId)) {
-        newSet.delete(commentId);
-      } else {
-        newSet.add(commentId);
-      }
-      return newSet;
-    });
-  };
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch('/api/comments?limit=10');
-        if (!response.ok) throw new Error('Failed to fetch comments');
-        const data = await response.json() as CommentsResponse;
-        setComments(data.data);
-      } catch (error) {
-        console.error('Failed to load comments:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load comments",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchComments();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-[200px]">
-        <p className="text-muted-foreground">Loading comments...</p>
-      </div>
-    );
-  }
+  const { data: comments } = await getComments();
 
   if (comments.length === 0) {
     return (
@@ -75,7 +41,6 @@ export function LastComments() {
     <ScrollArea className="w-full whitespace-nowrap">
       <div className="flex space-x-4 pb-4">
         {comments.map((comment) => {
-          const isExpanded = expandedComments.has(comment.id);
           return (
             <Card key={comment.id} className="w-[500px] flex-shrink-0">
               <CardContent className="p-4">
@@ -84,14 +49,14 @@ export function LastComments() {
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                   <div className="space-y-1 flex-1">
-                    <div className="flex justify-between items-start">
-                      <Link 
+                    <div className="">
+                      <Link
                         href={`/applications/${comment.application_id}`}
                         className="text-sm font-medium hover:underline"
                       >
                         {comment.application_name || "Unnamed Application"}
                       </Link>
-                      <p className="text-sm text-muted-foreground">
+                      <div className="text-sm text-muted-foreground">
                         {new Date(comment.created_at).toLocaleString('en-US', {
                           year: 'numeric',
                           month: 'short',
@@ -99,18 +64,11 @@ export function LastComments() {
                           hour: '2-digit',
                           minute: '2-digit'
                         })}
-                      </p>
+                      </div>
                     </div>
-                    <p className={`text-sm whitespace-pre-wrap ${isExpanded ? '' : 'line-clamp-3'}`}>
-                      {comment.comment}
+                    <p className={`text-sm whitespace-pre-wrap line-clamp-3`}>
+                      <MarkdownRenderer content={comment.comment} />
                     </p>
-                    <Button
-                      variant="link"
-                      className="p-0 h-auto text-xs"
-                      onClick={() => toggleComment(comment.id)}
-                    >
-                      {isExpanded ? 'Show less' : 'Read more'}
-                    </Button>
                   </div>
                 </div>
               </CardContent>
