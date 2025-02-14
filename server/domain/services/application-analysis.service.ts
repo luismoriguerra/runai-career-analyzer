@@ -38,7 +38,15 @@ export class ApplicationAnalysisService {
         const rebuildId = new Date().getTime();
         const { prompt, model, dependencies } = ACTION_PROMPTS[actionName];
         let resume: Resume | null = null;
-        
+
+        console.log(JSON.stringify({
+            message: 'generateNewAnalysis',
+            description,
+            applicationId,
+            actionName,
+            userId
+        }, null, 2));
+
         if (dependencies && dependencies.length > 0 && dependencies.some(dependency => dependency === 'resume')) {
             const resumes = await this.resumesService.getResumes(userId);
             if (resumes.length === 0) {
@@ -52,7 +60,7 @@ export class ApplicationAnalysisService {
         const { text, usage } = await generateText({
             model: model || modelByCategory.fastHermes2Pro8b,
             system: this.generateSystemPrompt(description, rebuildId, resume?.content),
-            maxTokens: 4000,
+            maxTokens: 8000,
             prompt,
         });
 
@@ -62,6 +70,11 @@ export class ApplicationAnalysisService {
             prompt_text: prompt,
             ai_messages: JSON.stringify(usage),
         });
+
+        console.log(JSON.stringify({
+            message: 'generateNewAnalysis',
+            analysis
+        }, null, 2));
 
         return {
             action_name: analysis.action_name as ActionName,
