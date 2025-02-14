@@ -2,7 +2,8 @@ import { modelByCategory } from '@/server/infrastructure/ai/llm-providers';
 import { OpenRouterLanguageModel } from '@openrouter/ai-sdk-provider';
 
 const websearch = modelByCategory.websearch;
-const reasoning = modelByCategory.reasoningR1Qwen32b;
+// const reasoning = modelByCategory.reasoningR1Qwen32b;
+const reasoning = modelByCategory.reasoningR1Distill70b;
 const defaultModel = modelByCategory.fastHermes2Pro8b;
 
 export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouterLanguageModel, dependencies?: string[] }> = {

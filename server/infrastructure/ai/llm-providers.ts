@@ -27,7 +27,7 @@ export const getProvider = (model: string) => {
 const llama3b = getProvider('openrouter::meta-llama/llama-3.2-3b-instruct'); // https://openrouter.ai/meta-llama/llama-3.2-3b-instruct
 const hermes2Pro8b = getProvider('openrouter::nousresearch/hermes-2-pro-llama-3-8b'); // https://openrouter.ai/nousresearch/hermes-2-pro-llama-3-8b
 
-// const deepseekr1Distill70b = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
+const deepseekr1Distill70b = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
 const r1DistillQwen32b = getProvider('openrouter::deepseek/deepseek-r1-distill-qwen-32b');
 const deepseekr1 = getProvider('openrouter::deepseek/deepseek-r1'); //https://openrouter.ai/deepseek/deepseek-r1
 const o1mini = getProvider('openrouter::openai/o1-mini'); // https://openrouter.ai/openai/o1-mini
@@ -41,6 +41,7 @@ export const modelByCategory = {
     fastLlama3b: llama3b,
 
     reasoningR1Qwen32b: r1DistillQwen32b,
+    reasoningR1Distill70b: deepseekr1Distill70b,
     reasoningMiniMax: minimax,
 
     codeR1Qwen32b: r1DistillQwen32b,

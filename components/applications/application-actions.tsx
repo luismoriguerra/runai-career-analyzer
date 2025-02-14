@@ -46,7 +46,7 @@ const actionsList = [
   },
   {
     id: 'common_interview_questions',
-    title: 'Common Questionsfrom your Resume',
+    title: 'Common Questions from your Resume',
     content: () => (
       <JobAction action="common_interview_questions" />
     ),
