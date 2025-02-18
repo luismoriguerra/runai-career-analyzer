@@ -35,49 +35,49 @@ const actionsList = [
     id: 'skills',
     title: 'Skills',
     content: () => (
-      <JobAction action="get_skills" />
+      <JobActionStream action="get_skills" />
     ),
   },
   {
     id: 'company',
     title: 'Company Information',
     content: () => (
-      <JobAction action="get_company_info" />
+      <JobActionStream action="get_company_info" />
     ),
   },
   {
     id: 'common_interview_questions',
     title: 'Common Questions from your Resume',
     content: () => (
-      <JobAction action="common_interview_questions" />
+      <JobActionStream action="common_interview_questions" />
     ),
   },
   {
     id: 'resume-hightlights',
     title: 'Resume Hightlights',
     content: () => (
-      <JobAction action="get_resume_hightlights" />
+      <JobActionStream action="get_resume_hightlights" />
     ),
   },
   {
     id: 'cover-letter',
     title: 'Cover Letter',
     content: () => (
-      <JobAction action="get_cover_letter" />
+      <JobActionStream action="get_cover_letter" />
     ),
   },
   {
     id: 'interview-questions',
     title: 'Technical Questions',
     content: () => (
-      <JobAction action="get_interview_questions" />
+      <JobActionStream action="get_interview_questions" />
     ),
   },
   {
     id: 'learning',
     title: 'Learning Resources',
     content: () => (
-      <JobAction action="get_learning_resources" />
+      <JobActionStream action="get_learning_resources" />
     ),
   },
 
@@ -86,7 +86,7 @@ const actionsList = [
     id: 'demo-apps',
     title: 'Demo Apps',
     content: () => (
-      <JobAction action="get_demo_apps" />
+      <JobActionStream action="get_demo_apps" />
     ),
   },
 ];

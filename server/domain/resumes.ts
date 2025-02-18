@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { getDb } from '../infrastructure/d1';
 
 export interface Resume {
     id: string;
@@ -22,7 +23,7 @@ export interface ResumeVersion {
 }
 
 export class ResumesService {
-    constructor(private db: CloudflareEnv["DB"]) { }
+    constructor(private db: CloudflareEnv["DB"] = getDb()) { }
 
     async createResume(userId: string, content: string): Promise<Resume> {
         const id = nanoid();
@@ -41,6 +42,15 @@ export class ResumesService {
             created_at: now,
             updated_at: now,
         };
+    }
+
+    async getLastResume(userId: string): Promise<Resume> {
+        const result = await this.db.prepare(
+            'SELECT * FROM resumes WHERE user_id = ? ORDER BY created_at DESC LIMIT 1'
+        ).bind(userId)
+            .first();
+
+        return result as unknown as Resume;
     }
 
     async getResumes(userId: string): Promise<Resume[]> {
@@ -174,12 +184,12 @@ export class ResumesService {
 
     async getResumeVersionsPaginated(resumeId: string, page: number = 1, limit: number = 10): Promise<{ data: ResumeVersion[], total: number }> {
         const offset = (page - 1) * limit;
-        
+
         const countResult = await this.db.prepare(
             'SELECT COUNT(*) as count FROM resume_versions WHERE resume_id = ?'
         ).bind(resumeId)
             .first();
-        
+
         const total = (countResult as { count: number }).count;
 
         const result = await this.db.prepare(

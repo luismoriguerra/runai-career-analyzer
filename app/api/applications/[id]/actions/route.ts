@@ -36,9 +36,7 @@ export async function GET(
                 actionName,
                 session.user.sub,
             );
-            return NextResponse.json({
-                data: analysis || null
-            });
+            return NextResponse.json( analysis || null);
         } catch (error) {
             if (error instanceof Error && error.message === 'Application not found') {
                 return NextResponse.json({ error: 'Application not found' }, { status: 404 });

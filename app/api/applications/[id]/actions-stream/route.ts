@@ -6,6 +6,7 @@ import { getSession } from '@auth0/nextjs-auth0/edge';
 import { CoreMessage, smoothStream, streamText } from 'ai';
 import { NextResponse } from 'next/server';
 import { to } from 'await-to-js';
+import { ResumesService } from '@/server/domain/resumes';
 export const runtime = 'edge';
 
 export async function POST(
@@ -30,10 +31,22 @@ export async function POST(
         return NextResponse.json({ error: 'Application not found' }, { status: 404 });
     }
 
+    let resumeContent = '';
+
+    if (dependencies && dependencies.includes('resume')) {
+        const resumeService = new ResumesService();
+        const resume = await resumeService.getLastResume(userId);
+        if (!resume) {
+            return NextResponse.json({ error: 'Resume not found' }, { status: 404 });
+        }
+
+        resumeContent = resume.content;
+    }
+
     const jobDescription = application.description ?? '';
 
 
-    const systemPrompt = ANALYSIS_SYSTEM_PROMPT(jobDescription, rebuild_id, undefined)
+    const systemPrompt = ANALYSIS_SYSTEM_PROMPT(jobDescription, rebuild_id, resumeContent)
 
     let model = promptModel;
     if (!model) {
@@ -68,6 +81,10 @@ export async function POST(
                     usage
                 }
             }, null, 2));
+
+            if (text.length === 0) {
+                return;
+            }
 
             const [err,] = await to(applicationsService.createAnalysis(applicationId, {
                 action_name: action_name,

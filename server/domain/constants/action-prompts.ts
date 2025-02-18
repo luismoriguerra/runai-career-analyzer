@@ -19,7 +19,7 @@ export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouter
 
     // Version 1
     "get_skills": {
-        prompt: "Review the job description and extract all relevant skills. Present them as a clear bullet-point list, then compare with the resume details to indicate which skills match and which are missing.",
+        prompt: "Review the job description and extract all relevant skills. Present them as a clear bullet-point list, then compare with the resume details to indicate which skills match and which are missing. Use icons to indicate match and missing skills. Dont use tables , prefer bullet points. at the end provide a Percentage Score of how much skills match and missing skills.",
         model: reasoning,
         dependencies: ['resume']
     },

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ export function JobAction({ action }: JobActionProps) {
   const [isCopying, setIsCopying] = useState(false);
   const [isCopyingContext, setIsCopyingContext] = useState(false);
 
-  const { data, error, isLoading, mutate } = useSWR(
+  const { data, error, isLoading } = useSWR(
     `/api/applications/${params.id}/actions?action_name=${action}`,
     fetcher
   );
