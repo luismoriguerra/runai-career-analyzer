@@ -9,15 +9,6 @@ const LLMName = 'openrouter';
 
 const baseUrl = getAIGatewayUrl(LLMName);
 
-export const openRouterListModels = [
-    'meta-llama/llama-3.2-1b-instruct', // cheap development
-    'microsoft/phi-4', // cheap prod
-    'deepseek/deepseek-chat', // default prod
-    'google/gemini-pro-1.5', // long context
-    'anthropic/claude-3.5-sonnet:beta', // high quality
-]
-
-export const openRouterModels = openRouterListModels.map(model => `${LLMName}::${model}`);
 
 const openrouter = createOpenRouter({
     baseURL: baseUrl,

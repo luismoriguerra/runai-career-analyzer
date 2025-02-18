@@ -4,7 +4,7 @@ import { OpenRouterLanguageModel } from '@openrouter/ai-sdk-provider';
 const websearch = modelByCategory.websearch;
 // const reasoning = modelByCategory.reasoningR1Qwen32b;
 const reasoning = modelByCategory.reasoningR1Distill70b;
-const defaultModel = modelByCategory.fastHermes2Pro8b;
+const defaultModel = modelByCategory.fastLlama3b;
 
 export const ACTION_PROMPTS: Record<string, { prompt: string; model?: OpenRouterLanguageModel, dependencies?: string[] }> = {
 

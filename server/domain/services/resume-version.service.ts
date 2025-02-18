@@ -1,5 +1,5 @@
 import { generateText } from 'ai';
-import { modelByCategory } from '@/server/infrastructure/ai/llm-providers';
+import { defaultCategoryModel } from '@/server/infrastructure/ai/llm-providers';
 import { RESUME_SYSTEM_PROMPT } from '../constants/resume-prompts';
 import { ResumeVersion, PaginatedResponse } from '../types/resume-types';
 import { ResumesService } from '../resumes';
@@ -35,7 +35,7 @@ export class ResumeVersionService {
         const rebuildId = new Date().getTime();
         
         const { text, usage } = await generateText({
-            model: modelByCategory.fastHermes2Pro8b,
+            model: defaultCategoryModel,
             system: this.generateSystemPrompt(version.content_previous, rebuildId),
             maxTokens: 8000,
             prompt: version.prompt,

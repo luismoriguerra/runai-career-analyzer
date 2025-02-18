@@ -5,6 +5,7 @@ import { JobAction } from '@/components/job-action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CollapsibleDiv } from "@/components/ui/collapsible-div";
+import { JobActionStream } from "../job-action-stream";
 
 const actionsList = [
   // {
@@ -27,7 +28,7 @@ const actionsList = [
     id: 'bullet-points',
     title: 'Bullet Points',
     content: () => (
-      <JobAction action="bullet_points" />
+      <JobActionStream action="bullet_points" />
     ),
   },
   {

@@ -1,65 +1,54 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { MarkdownRenderer } from './MarkdownRenderer';
+import useSWR from 'swr';
 
 interface JobActionProps {
   action: string;
 }
 
+interface ActionResponse {
+  action_result: string;
+}
+
+const fetcher = async (url: string): Promise<ActionResponse> => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch action content');
+  return res.json();
+};
+
 export function JobAction({ action }: JobActionProps) {
   const params = useParams();
   const { toast } = useToast();
-  const [content, setContent] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
   const [isCopying, setIsCopying] = useState(false);
   const [isCopyingContext, setIsCopyingContext] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
 
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    if (loading) {
-      const startTime = Date.now();
-      intervalId = setInterval(() => {
-        setElapsedTime(Date.now() - startTime);
-      }, 10);
-    } else {
-      setElapsedTime(0);
-    }
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [loading]);
+  const { data, error, isLoading, mutate } = useSWR(
+    `/api/applications/${params.id}/actions?action_name=${action}`,
+    fetcher
+  );
 
-  const fetchActionContent = useCallback(async (rebuild: boolean = false) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `/api/applications/${params.id}/actions?action_name=${action}&rebuild=${rebuild}`
-      );
-      if (!response.ok) {
-        throw new Error('Failed to fetch action content');
-      }
-      const data = await response.json() as { action_result: string };
-      setContent(data.action_result);
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to load action content',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [action, params.id, toast]);
+  const content = data?.action_result;
 
-  useEffect(() => {
-    fetchActionContent();
-  }, [fetchActionContent]);
+  // const handleRegenerate = useCallback(async () => {
+  //   try {
+  //     await mutate(
+  //       fetcher(`/api/applications/${params.id}/actions?action_name=${action}&rebuild=true`),
+  //       { revalidate: true }
+  //     );
+  //   } catch {
+  //     toast({
+  //       title: 'Error',
+  //       description: 'Failed to regenerate content',
+  //       variant: 'destructive',
+  //     });
+  //   }
+  // }, [action, mutate, params.id, toast]);
 
   const handleCopyContent = async () => {
     if (!content) return;
@@ -103,13 +92,18 @@ export function JobAction({ action }: JobActionProps) {
     }
   };
 
-  if (loading) {
+  if (error) {
+    toast({
+      title: 'Error',
+      description: 'Failed to load action content',
+      variant: 'destructive',
+    });
+  }
+
+  if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-4 space-y-2">
         <ReloadIcon className="h-4 w-4 animate-spin" />
-        <div className="text-sm text-muted-foreground">
-          {(elapsedTime / 1000).toFixed(2)}s
-        </div>
       </div>
     );
   }
@@ -124,7 +118,7 @@ export function JobAction({ action }: JobActionProps) {
           variant="outline"
           size="sm"
           onClick={handleCopyContent}
-          disabled={loading || !content || isCopying}
+          disabled={isLoading || !content || isCopying}
         >
           {isCopying ? (
             <>
@@ -139,7 +133,7 @@ export function JobAction({ action }: JobActionProps) {
           variant="outline"
           size="sm"
           onClick={handleCopyAsContext}
-          disabled={loading || !content || isCopyingContext}
+          disabled={isLoading || !content || isCopyingContext}
         >
           {isCopyingContext ? (
             <>
@@ -153,10 +147,10 @@ export function JobAction({ action }: JobActionProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => fetchActionContent(true)}
-          disabled={loading}
+          onClick={handleRegenerate}
+          disabled={isLoading}
         >
-          {loading ? (
+          {isLoading ? (
             <>
               <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
               Regenerating...

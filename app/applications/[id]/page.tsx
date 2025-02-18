@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Application } from '@/server/domain/applications';
@@ -8,42 +8,28 @@ import { ApplicationHeader } from '@/components/applications/application-header'
 import { ApplicationEditForm } from '@/components/applications/application-edit-form';
 import { ApplicationTabs } from '@/components/applications/application-tabs';
 import { Building2 } from 'lucide-react';
+import useSWR from 'swr';
 
 export const runtime = 'edge';
+
+const fetcher = async (url: string): Promise<Application> => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Failed to fetch application');
+  return response.json();
+};
 
 export default function ApplicationDetail() {
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
-  const [application, setApplication] = useState<Application | null>(null);
-  const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedApplication, setEditedApplication] = useState<Partial<Application>>({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  useEffect(() => {
-    async function fetchApplication() {
-      try {
-        const response = await fetch(`/api/applications/${params.id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch application');
-        }
-        const data = await response.json() as Application;
-        setApplication(data);
-        setEditedApplication(data);
-      } catch {
-        toast({
-          title: 'Error',
-          description: 'Failed to load application',
-          variant: 'destructive',
-        });
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchApplication();
-  }, [params.id, toast]);
+  const { data: application, error, mutate } = useSWR<Application>(
+    `/api/applications/${params.id}`,
+    fetcher
+  );
 
   const handleDelete = async () => {
     try {
@@ -79,7 +65,7 @@ export default function ApplicationDetail() {
       if (!response.ok) throw new Error('Failed to update application');
 
       const updatedApplication = await response.json() as Application;
-      setApplication(updatedApplication);
+      mutate(updatedApplication, false);
       setIsEditing(false);
       toast({
         title: 'Success',
@@ -94,10 +80,15 @@ export default function ApplicationDetail() {
     }
   };
 
-  if (loading) {
+  if (error) {
+    toast({
+      title: 'Error',
+      description: 'Failed to load application',
+      variant: 'destructive',
+    });
     return (
       <main className="container mx-auto p-6">
-        <div className="h-8 w-48 bg-muted animate-pulse rounded" />
+        <p className="text-muted-foreground">Failed to load application</p>
       </main>
     );
   }
@@ -105,7 +96,7 @@ export default function ApplicationDetail() {
   if (!application) {
     return (
       <main className="container mx-auto p-6">
-        <p className="text-muted-foreground">Application not found</p>
+        <div className="h-8 w-48 bg-muted animate-pulse rounded" />
       </main>
     );
   }

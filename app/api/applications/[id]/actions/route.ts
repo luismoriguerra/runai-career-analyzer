@@ -20,7 +20,6 @@ export async function GET(
 
         const searchParams = request.nextUrl.searchParams;
         const actionName = searchParams.get('action_name') as ActionName;
-        const rebuild = searchParams.get('rebuild') === 'true';
 
         if (!actionName) {
             return NextResponse.json({ error: 'Action name is required' }, { status: 400 });
@@ -36,9 +35,10 @@ export async function GET(
                 params.id,
                 actionName,
                 session.user.sub,
-                rebuild
             );
-            return NextResponse.json(analysis);
+            return NextResponse.json({
+                data: analysis || null
+            });
         } catch (error) {
             if (error instanceof Error && error.message === 'Application not found') {
                 return NextResponse.json({ error: 'Application not found' }, { status: 404 });

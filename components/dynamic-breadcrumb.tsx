@@ -17,7 +17,7 @@ export function DynamicBreadcrumb() {
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbs.map((item, index) => (
-          <>
+          <div key={item.route} className="flex items-center">
             <BreadcrumbItem key={item.route} className="hidden md:block">
               {index === breadcrumbs.length - 1 ? (
                 <BreadcrumbPage>{item.label}</BreadcrumbPage>
@@ -30,7 +30,7 @@ export function DynamicBreadcrumb() {
             {index < breadcrumbs.length - 1 && (
               <BreadcrumbSeparator className="hidden md:block" />
             )}
-          </>
+          </div>
         ))}
       </BreadcrumbList>
     </Breadcrumb>

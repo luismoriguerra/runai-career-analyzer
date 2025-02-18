@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { getDb } from '../infrastructure/d1';
 
 export interface Application {
     id: string;
@@ -22,7 +23,7 @@ export interface ApplicationAnalysis {
 }
 
 export class ApplicationsService {
-    constructor(private db: CloudflareEnv["DB"]) { }
+    constructor(private db: CloudflareEnv["DB"] = getDb()) { }
 
     async createApplication(userId: string, data: Pick<Application, 'name' | 'description' | 'company_name'>): Promise<Application> {
         const id = nanoid();

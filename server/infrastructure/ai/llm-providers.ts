@@ -1,13 +1,6 @@
-import { openRouterModels, openRouterProvider } from "./providers/open-router";
+import { openRouterProvider } from "./providers/open-router";
 
 // https://sdk.vercel.ai/providers/ai-sdk-providers
-
-
-export const models = [
-    ...openRouterModels,
-]
-
-export const systemDefaultModel = openRouterModels[0];
 
 export const apiProviders = {
     openrouter: openRouterProvider,
@@ -25,7 +18,7 @@ export const getProvider = (model: string) => {
 
 
 const llama3b = getProvider('openrouter::meta-llama/llama-3.2-3b-instruct'); // https://openrouter.ai/meta-llama/llama-3.2-3b-instruct
-const hermes2Pro8b = getProvider('openrouter::nousresearch/hermes-2-pro-llama-3-8b'); // https://openrouter.ai/nousresearch/hermes-2-pro-llama-3-8b
+// const hermes2Pro8b = getProvider('openrouter::nousresearch/hermes-2-pro-llama-3-8b'); // https://openrouter.ai/nousresearch/hermes-2-pro-llama-3-8b
 
 const deepseekr1Distill70b = getProvider('openrouter::deepseek/deepseek-r1-distill-llama-70b');
 const r1DistillQwen32b = getProvider('openrouter::deepseek/deepseek-r1-distill-qwen-32b');
@@ -37,7 +30,7 @@ const minimax = getProvider('openrouter::minimax/minimax-01'); // https://openro
 const perplexitySonarLarge = getProvider('openrouter::perplexity/llama-3.1-sonar-large-128k-online'); // https://openrouter.ai/perplexity/llama-3.1-sonar-large-128k-online
 
 export const modelByCategory = {
-    fastHermes2Pro8b: hermes2Pro8b,
+    // fastHermes2Pro8b: hermes2Pro8b,
     fastLlama3b: llama3b,
 
     reasoningR1Qwen32b: r1DistillQwen32b,
@@ -53,7 +46,8 @@ export const modelByCategory = {
 }
 
 export const modelCategories = Object.keys(modelByCategory);
-export const defaultCategory = modelCategories[0];
+export const defaultCategoryName = modelCategories[0];
+export const defaultCategoryModel = modelByCategory[defaultCategoryName as keyof typeof modelByCategory];
 
 export function getModelByCategory(category: keyof typeof modelByCategory) {
     return modelByCategory[category];

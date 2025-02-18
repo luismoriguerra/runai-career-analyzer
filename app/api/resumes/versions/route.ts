@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/server/infrastructure/d1';
 import { ResumesService } from '@/server/domain/resumes';
 import { getSession } from '@auth0/nextjs-auth0/edge';
-import { modelByCategory } from '@/server/infrastructure/ai/llm-providers';
+import { defaultCategoryModel } from '@/server/infrastructure/ai/llm-providers';
 import { generateText } from 'ai';
 
 export const runtime = 'edge';
@@ -71,7 +71,7 @@ You must respond to the prompt based on the resume. don't explain yourself. only
 
 
     const { text, usage } = await generateText({
-      model: modelByCategory.fastHermes2Pro8b,
+      model: defaultCategoryModel,
       system: systemTemplate,
       maxTokens: 8000,
       prompt,
