@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const result = streamText({
         model: openrouter('nousresearch/hermes-2-pro-llama-3-8b'),
-        // experimental_transform: smoothStream({ chunking: 'word' }),
+        experimental_transform: smoothStream({ chunking: 'word' }),
         messages,
     });
 

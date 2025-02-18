@@ -147,7 +147,7 @@ export function JobAction({ action }: JobActionProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={handleRegenerate}
+          // onClick={handleRegenerate}
           disabled={isLoading}
         >
           {isLoading ? (
